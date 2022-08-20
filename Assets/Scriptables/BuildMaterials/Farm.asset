@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
+  m_Name: Farm
+  m_EditorClassIdentifier: 
+  buildMaterialIndex: 8
+  materialName: Farm
+  downgradeOptions:
+  - {fileID: 11400000, guid: af57c102df7312f43865384de9d8f9a2, type: 2}
+  - {fileID: 11400000, guid: 343be6b2256cdf5489b77eae3ff5f0d3, type: 2}
+  buildRecipe:
+  - {fileID: 11400000, guid: af57c102df7312f43865384de9d8f9a2, type: 2}
+  - {fileID: 11400000, guid: 343be6b2256cdf5489b77eae3ff5f0d3, type: 2}
+  - {fileID: 11400000, guid: 8728617e07f4eee4989a1e0de2fe5fce, type: 2}
+  isBaseMaterial: 0
+  sprite: {fileID: 21300000, guid: f3b26a3646f9f974fb01b39ea0ece63f, type: 3}
+  tileBase: {fileID: 11400000, guid: 6ed15a9ba52f5e54390ae4ef56269afd, type: 2}

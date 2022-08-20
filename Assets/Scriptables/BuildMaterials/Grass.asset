@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
+  m_Name: Grass
+  m_EditorClassIdentifier: 
+  buildMaterialIndex: 0
+  materialName: Grass
+  downgradeOptions: []
+  buildRecipe: []
+  isBaseMaterial: 1
+  sprite: {fileID: 21300000, guid: 8d1e670847c5de840a8f305d3afcd28d, type: 3}
+  tileBase: {fileID: 11400000, guid: 50247b30dd494b64cb5553d056e67560, type: 2}
