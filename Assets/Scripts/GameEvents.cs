@@ -48,4 +48,14 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action onSelectableSelection;
+
+    public void SelectableSelection()
+    {
+        if (onSelectableSelection != null)
+        {
+            onSelectableSelection();
+        }
+    }
+
 }

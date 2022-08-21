@@ -238,8 +238,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.346, y: -2.3019}
-  m_SizeDelta: {x: 184.4291, y: 126.5417}
+  m_AnchoredPosition: {x: 0.0000047684, y: 0}
+  m_SizeDelta: {x: 175.8239, y: 126.5417}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &156151904
 MonoBehaviour:
@@ -266,7 +266,7 @@ MonoBehaviour:
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Build
+  m_Text: Can't Build
 --- !u!222 &156151905
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1447,6 +1447,7 @@ MonoBehaviour:
   greenCheck: {fileID: 11400000, guid: 58d9935c656506c4da1bc452804b0482, type: 2}
   redX: {fileID: 11400000, guid: 907480e0d7a470444ba278343451b496, type: 2}
   blueTarget: {fileID: 11400000, guid: 3689114e37559e4468c46e14300fec27, type: 2}
+  buildButton: {fileID: 1183327715}
 --- !u!1 &701039575
 GameObject:
   m_ObjectHideFlags: 0
@@ -1932,7 +1933,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 0.09860484, b: 0, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1946,7 +1947,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1183327718}
   m_OnClick:
     m_PersistentCalls:

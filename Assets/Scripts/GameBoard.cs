@@ -7,19 +7,23 @@ public class GameBoard : Singleton<GameBoard>
 {
     GameState gameState;
     PlayerInput playerInput;
+    BuildSystem buildSystem;
 
     [SerializeField] SelectObjectBase greenCheck;
     [SerializeField] SelectObjectBase redX;
     [SerializeField] SelectObjectBase blueTarget;
+    [SerializeField] GameObject buildButton;
 
     protected override void Awake()
     {
         base.Awake();
         gameState = GameState.GetInstance();
         playerInput = new PlayerInput();
+        buildSystem = BuildSystem.GetInstance();
 
         GameEvents.current.onSelectableEnaged += DisplayTargets;
         GameEvents.current.onSelectableDisenaged += HideTargets;
+        GameEvents.current.onSelectableSelection += UpdateBuildButton;
     }
 
     public void SetupGame()
@@ -117,6 +121,7 @@ public class GameBoard : Singleton<GameBoard>
                 gameState.MaterialsSelected[gameState.SelectionBox.name] = currentPosition;
             }
 
+            GameEvents.current.SelectableSelection();
             GameEvents.current.SelectableDisengaged();
         }
     }
@@ -131,5 +136,21 @@ public class GameBoard : Singleton<GameBoard>
     {
         playerInput.Disable();
         playerInput.Gameplay.MouseLeftClick.performed -= OnLeftClick;
+    }
+
+    void UpdateBuildButton()
+    {
+        Debug.Log("I'm Here");
+        bool canBuild = buildSystem.CheckIfRecipeCanBeBuilt();
+        if (canBuild)
+        {
+            buildButton.GetComponent<Button>().interactable = true;
+            buildButton.transform.GetChild(0).GetComponent<Text>().text = "Build!";
+        }
+        else
+        {
+            buildButton.GetComponent<Button>().interactable = false;
+            buildButton.transform.GetChild(0).GetComponent<Text>().text = "Can't Build";
+        }
     }
 }
