@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class GameState : Singleton<GameState>
 {
@@ -66,6 +67,9 @@ public class GameState : Singleton<GameState>
     //Win Screen
     [SerializeField] GameObject winScreen;
     
+    // Downgrading
+    List<Vector3Int> downgradeLocations = new List<Vector3Int>();
+    
     protected override void Awake()
     {
         base.Awake();
@@ -84,6 +88,28 @@ public class GameState : Singleton<GameState>
         messageBoard.GetComponent<Text>().text = message;
         messageBoard.gameObject.GetComponent<Text>().enabled = true;
         timeWhenDisappear = Time.time + timeToAppear;
+    }
+
+    public void DowngradeSelectionsExcept(Vector3Int buildLocation)
+    {
+        foreach (Vector3Int location in selectableLocations)
+        {
+            if (location != buildLocation)
+            {
+                BoardHex boardHexAtLocation = GetBoardHexAtPosition(location);
+                int downgradeRange = boardHexAtLocation.BuildMaterial.DowngradeOptions.Count;
+                if (downgradeRange != 0)
+                {
+                    boardHexAtLocation.BuildMaterial =
+                        boardHexAtLocation.BuildMaterial.DowngradeOptions[UnityEngine.Random.Range(0, downgradeRange)];
+                    coordinateIndexDictionary[location] = boardHexAtLocation.BuildMaterial.BuildMaterialIndex;
+                    defaultMap.SetTile(location, boardHexAtLocation.BuildMaterial.TileBase);
+                }
+            }
+        }
+
+        downgradeLocations = new List<Vector3Int>();
+        // UpdateBoardTileCounts();
     }
     
     public void EvaluateIfRecipeCanBeBuild()
@@ -388,5 +414,11 @@ public class GameState : Singleton<GameState>
     {
         get => messageBoard;
         set => messageBoard = value;
+    }
+
+    public List<Vector3Int> DowngradeLocations
+    {
+        get => downgradeLocations;
+        set => downgradeLocations = value;
     }
 }

@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
             // refresh board hex list
             BoardHex boardHex = gameState.GetBoardHexAtPosition(buildPosition);
             boardHex.BuildMaterial = gameState.CurrentRecipe;
-            
+            gameState.DowngradeSelectionsExcept(buildPosition);
             // refresh the tile count
             gameState.UpdateBoardTileCounts();
         }

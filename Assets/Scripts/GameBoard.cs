@@ -171,6 +171,7 @@ public class GameBoard : Singleton<GameBoard>
                 gameState.BuildSelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
                 gameState.BuildLocation = currentPosition;
                 gameState.IsBuildLocationSet = true;
+                gameState.DowngradeLocations = new List<Vector3Int>(gameState.SelectableLocations);
                 gameState.SelectableLocations = new List<Vector3Int>();
 
             }
