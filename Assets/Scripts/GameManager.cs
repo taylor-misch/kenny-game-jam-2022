@@ -39,7 +39,8 @@ public class GameManager : MonoBehaviour
         GameEvents.current.onRecipeUnselected += HideBuildRecipePanel;
         GameEvents.current.onRecipeUnselected += DestroyChildren;
         PopulateBuildMenu();
-
+        gameState.UpdateBoardTileCounts();
+        gameState.EvaluateIfRecipeCanBeBuild();
         GameEvents.current.onSelectableEnaged += PrepareForSelection;
         GameEvents.current.onBuildSelectableEngaged += PrepareForBuildLocationSelection;
     }
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
             gameState.UpdateBoardTileCounts();
         }
         CancelBuild();
+        gameState.EvaluateIfRecipeCanBeBuild();
         Debug.Log("Build It!");
     }
 
@@ -126,13 +128,20 @@ public class GameManager : MonoBehaviour
 
     private void PopulateBuildMenu()
     {
+        int index = 0;
         foreach (BuildMaterial buildMaterial in gameState.BuildMaterialList)
         {
-            GameObject buildItem = Instantiate(buildMenuItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            buildItem.GetComponent<Image>().sprite = buildMaterial.Sprite;
-            buildItem.transform.SetParent(buildMenuItemContainer.transform);
-            buildItem.transform.localScale = new Vector3(1, 1, 1);
-            buildItem.GetComponent<BuildingButtonHandler>().BuildMaterial = buildMaterial;
+            if (index > 2)
+            {
+                GameObject buildItem = Instantiate(buildMenuItemPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                buildItem.GetComponent<Image>().sprite = buildMaterial.Sprite;
+                buildItem.transform.SetParent(buildMenuItemContainer.transform);
+                buildItem.transform.localScale = new Vector3(1, 1, 1);
+                buildItem.GetComponent<BuildingButtonHandler>().BuildMaterial = buildMaterial;
+                gameState.MenuItems.Add(buildItem);
+            }
+
+            index++;
         }
     }
 

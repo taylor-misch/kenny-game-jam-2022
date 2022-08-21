@@ -49,9 +49,66 @@ public class GameState : Singleton<GameState>
     Vector3Int buildLocation;
     bool isBuildLocationSet;
     
+    
+    // Menu items
+    List<GameObject> menuItems = new List<GameObject>();
+    
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    public void EvaluateIfRecipeCanBeBuild()
+    {
+        foreach (GameObject menuItem in menuItems)
+        {
+            BuildMaterial material = menuItem.GetComponent<BuildingButtonHandler>().BuildMaterial;
+            Debug.Log("\n material: " + material.MaterialName);
+            bool result = CheckIfRecipeIsPossible(material.BuildRecipe);
+            menuItem.GetComponent<Button>().interactable = result;
+            // Debug.Log("Material: " + material.MaterialName + " is " + result);
+        }
+    }
+
+    public bool CheckIfRecipeIsPossible(List<BuildMaterial> materials)
+    {
+        Dictionary<string, int> materialDictionary = new Dictionary<string, int>();
+
+        foreach (BuildMaterial buildMaterial in materials)
+        {
+            if (materialDictionary.ContainsKey(buildMaterial.MaterialName))
+            {
+                materialDictionary[buildMaterial.MaterialName] += 1;
+            }
+            else
+            {
+                materialDictionary[buildMaterial.MaterialName] = 1;
+            }
+        }
+        
+        foreach (KeyValuePair<string, int> kvp in materialDictionary)
+            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        
+
+        foreach (KeyValuePair<string, int> kvp in materialDictionary)
+        {
+            if (tileCountDictionary.ContainsKey(kvp.Key))
+            {
+                if (tileCountDictionary[kvp.Key] < kvp.Value)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
+            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        
+        return true;
     }
 
     public void UpdateBoardTileCounts()
@@ -269,5 +326,11 @@ public class GameState : Singleton<GameState>
     {
         get => isBuildLocationSet;
         set => isBuildLocationSet = value;
+    }
+
+    public List<GameObject> MenuItems
+    {
+        get => menuItems;
+        set => menuItems = value;
     }
 }
