@@ -57,5 +57,35 @@ public class GameEvents : MonoBehaviour
             onSelectableSelection();
         }
     }
+    
+    public event Action onBuildSelectableEngaged;
+
+    public void BuildSelectableEngaged()
+    {
+        if (onBuildSelectableEngaged != null)
+        {
+            onBuildSelectableEngaged();
+        }
+    }
+    
+    public event Action onBuildSelectableDisengaged;
+
+    public void BuildSelectableDisengaged()
+    {
+        if (onBuildSelectableDisengaged != null)
+        {
+            onBuildSelectableDisengaged();
+        }
+    }
+    
+    public event Action onBuildSelectableSelection;
+
+    public void BuildSelectableSelection()
+    {
+        if (onBuildSelectableSelection != null)
+        {
+            onBuildSelectableSelection();
+        }
+    }
 
 }

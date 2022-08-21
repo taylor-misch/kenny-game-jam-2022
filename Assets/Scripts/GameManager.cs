@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     // Materials needed section
     [SerializeField] GameObject materialsNeededItems;
     [SerializeField] GameObject materialsSelectedItems;
-    [SerializeField] GameObject buildLocationItem;
     
     // Build Menu 
     [SerializeField] GameObject buildMenuItemContainer;
@@ -31,6 +30,7 @@ public class GameManager : MonoBehaviour
         gameBoard.SetupGame();
         gameState.Turn = 1;
         turnCounter.GetComponent<Text>().text = "Turn: " + gameState.Turn;
+        gameState.IsBuildLocationSet = false;
         
         buildRecipeOverlay.SetActive(false);
         
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         PopulateBuildMenu();
 
         GameEvents.current.onSelectableEnaged += PrepareForSelection;
+        GameEvents.current.onBuildSelectableEngaged += PrepareForBuildLocationSelection;
     }
 
 
@@ -53,9 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void BuildRecipe()
     {
-        if (gameState.MaterialsSelected["selectable4"] != null)
+        if (gameState.IsBuildLocationSet)
         {
-            Vector3Int buildPosition = gameState.MaterialsSelected["selectable4"];
+            Vector3Int buildPosition = gameState.BuildLocation;
             gameState.DefaultMap.SetTile(buildPosition, gameState.CurrentRecipe.TileBase);
             gameState.CoordinateIndexDictionary[buildPosition] =
                 gameState.CurrentRecipe.BuildMaterialIndex;
@@ -87,7 +88,6 @@ public class GameManager : MonoBehaviour
             InstantiateSelectableItems("selectable" + index, materialsSelectedItems);
             index++;
         }
-        InstantiateSelectableItems("selectable4", buildLocationItem);
     }
 
     private void HideBuildRecipePanel()
@@ -122,10 +122,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach (Transform child in buildLocationItem.transform)
-        {
-            Destroy(child.gameObject);
-        }
     }
 
     private void PopulateBuildMenu()
@@ -143,5 +139,10 @@ public class GameManager : MonoBehaviour
     private void PrepareForSelection()
     {
         gameState.IsSelectableEngaged = true;
+    }
+
+    private void PrepareForBuildLocationSelection()
+    {
+        gameState.IsBuildSelectableEngaged = true;
     }
 }

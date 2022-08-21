@@ -24,6 +24,10 @@ public class GameBoard : Singleton<GameBoard>
         GameEvents.current.onSelectableEnaged += DisplayTargets;
         GameEvents.current.onSelectableDisenaged += HideTargets;
         GameEvents.current.onSelectableSelection += UpdateBuildButton;
+
+        GameEvents.current.onBuildSelectableEngaged += DisplayBuildTargets;
+        GameEvents.current.onBuildSelectableDisengaged += HideBuildTargets;
+        GameEvents.current.onBuildSelectableSelection += UpdateBuildButton;
     }
 
     public void SetupGame()
@@ -106,6 +110,23 @@ public class GameBoard : Singleton<GameBoard>
         }
     }
 
+    public void DisplayBuildTargets()
+    {
+        foreach (KeyValuePair<string, Vector3Int> kvp in gameState.MaterialsSelected)
+        {
+            gameState.SelectMap.SetTile(kvp.Value, blueTarget.TileBase);
+        }
+    }
+
+    public void HideBuildTargets()
+    {
+        gameState.IsBuildSelectableEngaged = false;
+        foreach (BoardHex boardHex in gameState.BoardHexList)
+        {
+            gameState.SelectMap.SetTile(boardHex.Position, null);
+        }
+    }
+
     void OnLeftClick(InputAction.CallbackContext ctx)
     {
         if (gameState.IsSelectableEngaged)
@@ -115,7 +136,6 @@ public class GameBoard : Singleton<GameBoard>
             if (gameState.GetStartingBoardPositions().Contains(currentPosition))
             {
                 int itemIndex = gameState.CoordinateIndexDictionary[currentPosition];
-                Debug.Log("Index of item: " + itemIndex);
                 gameState.SelectedBuildMaterial = gameState.BuildMaterialList[itemIndex];
                 gameState.SelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
                 gameState.MaterialsSelected[gameState.SelectionBox.name] = currentPosition;
@@ -124,6 +144,23 @@ public class GameBoard : Singleton<GameBoard>
             GameEvents.current.SelectableSelection();
             GameEvents.current.SelectableDisengaged();
         }
+
+        if (gameState.IsBuildSelectableEngaged)
+        {
+            // assign selected material
+            Vector3Int currentPosition = gameState.CurrentGridPosition;
+            if (gameState.GetStartingBoardPositions().Contains(currentPosition))
+            {
+                int itemIndex = gameState.CoordinateIndexDictionary[currentPosition];
+                gameState.SelectedBuildMaterial = gameState.BuildMaterialList[itemIndex];
+                gameState.BuildSelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
+                gameState.BuildLocation = currentPosition;
+                gameState.IsBuildLocationSet = true;
+            }
+
+            GameEvents.current.BuildSelectableSelection();
+            GameEvents.current.BuildSelectableDisengaged();
+        }
     }
 
     void OnEnable()
@@ -131,7 +168,7 @@ public class GameBoard : Singleton<GameBoard>
         playerInput.Enable();
         playerInput.Gameplay.MouseLeftClick.performed += OnLeftClick;
     }
-    
+
     void OnDisable()
     {
         playerInput.Disable();
@@ -140,7 +177,6 @@ public class GameBoard : Singleton<GameBoard>
 
     void UpdateBuildButton()
     {
-        Debug.Log("I'm Here");
         bool canBuild = buildSystem.CheckIfRecipeCanBeBuilt();
         if (canBuild)
         {

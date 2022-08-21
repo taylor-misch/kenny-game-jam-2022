@@ -18,6 +18,10 @@ public class BuildSystem : Singleton<BuildSystem>
 
     public bool CheckIfRecipeCanBeBuilt()
     {
+        if (!gameState.IsBuildLocationSet)
+        {
+            return false;
+        }
         Dictionary<string, int> buildingMaterialCountDictionary = new Dictionary<string, int>();
 
         // build up the supply count

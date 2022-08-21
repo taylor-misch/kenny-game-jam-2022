@@ -7,6 +7,7 @@ public class SelectionButtonHandler : MonoBehaviour
 {
     Button button;
     GameState gameState;
+    [SerializeField] bool isBuildLocation;
 
     private void Awake()
     {
@@ -18,8 +19,16 @@ public class SelectionButtonHandler : MonoBehaviour
 
     private void ButtonClicked()
     {
-        gameState.SelectionBox = gameObject;
-        GameEvents.current.SelectableEngaged();
+        if (isBuildLocation)
+        {
+            gameState.BuildSelectionBox = gameObject;
+            GameEvents.current.BuildSelectableEngaged();
+        }
+        else
+        {
+            gameState.SelectionBox = gameObject;
+            GameEvents.current.SelectableEngaged();
+        }
     }
     
 }

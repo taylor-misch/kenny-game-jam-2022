@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameState : Singleton<GameState>
 {
@@ -9,6 +10,9 @@ public class GameState : Singleton<GameState>
     [SerializeField] Tilemap previewMap;
     [SerializeField] Tilemap selectMap;
 
+    [SerializeField] Sprite blankBox;
+    [SerializeField] GameObject selectableLocationBox;
+    
     // Data Collections
     [SerializeField] List<BuildMaterial> buildMaterialList;
     [SerializeField] List<BuildMaterial> starterBuildMaterials;
@@ -38,7 +42,13 @@ public class GameState : Singleton<GameState>
     BuildMaterial selectedBuildMaterial;
     bool isSelectableEngaged;
     GameObject selectionBox;
-
+    
+    // Build Selectable
+    GameObject buildSelectionBox;
+    bool isBuildSelectableEngaged;
+    Vector3Int buildLocation;
+    bool isBuildLocationSet;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -71,6 +81,15 @@ public class GameState : Singleton<GameState>
         currentRecipe = null;
         GameEvents.current.RecipeUnselected();
         GameEvents.current.SelectableDisengaged();
+        ClearBuildLocationData();
+    }
+
+    public void ClearBuildLocationData()
+    {
+        selectableLocationBox.GetComponent<Image>().sprite = blankBox;
+        isBuildSelectableEngaged = false;
+        buildLocation = Vector3Int.zero;
+        isBuildLocationSet = false;
     }
 
     public BoardHex GetBoardHexAtPosition(Vector3Int position)
@@ -226,5 +245,29 @@ public class GameState : Singleton<GameState>
     {
         get => currentRecipe;
         set => currentRecipe = value;
+    }
+
+    public GameObject BuildSelectionBox
+    {
+        get => buildSelectionBox;
+        set => buildSelectionBox = value;
+    }
+
+    public bool IsBuildSelectableEngaged
+    {
+        get => isBuildSelectableEngaged;
+        set => isBuildSelectableEngaged = value;
+    }
+
+    public Vector3Int BuildLocation
+    {
+        get => buildLocation;
+        set => buildLocation = value;
+    }
+
+    public bool IsBuildLocationSet
+    {
+        get => isBuildLocationSet;
+        set => isBuildLocationSet = value;
     }
 }
