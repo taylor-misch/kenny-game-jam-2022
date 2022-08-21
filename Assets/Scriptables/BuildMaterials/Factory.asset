@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
   m_Name: Factory
   m_EditorClassIdentifier: 
-  buildMaterialIndex: 0
-  materialName: 
-  downgradeOptions: []
-  buildRecipe: []
+  buildMaterialIndex: 13
+  materialName: Factory
+  downgradeOptions:
+  - {fileID: 11400000, guid: 359e7839db5b6b848a323cf170cef5ac, type: 2}
+  - {fileID: 11400000, guid: 17b1da3069842624f9c4e0ea0448399a, type: 2}
+  - {fileID: 11400000, guid: 55a2b4a62083cad47918a8f822327a7d, type: 2}
+  buildRecipe:
+  - {fileID: 11400000, guid: 359e7839db5b6b848a323cf170cef5ac, type: 2}
+  - {fileID: 11400000, guid: c657d9fb1e5ee0b45aec39c8a34e3f6e, type: 2}
+  - {fileID: 11400000, guid: 17b1da3069842624f9c4e0ea0448399a, type: 2}
   isBaseMaterial: 0
-  sprite: {fileID: 0}
-  tileBase: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 214eea5ff3272d24ba1aaa1de652808d, type: 3}
+  tileBase: {fileID: 11400000, guid: d08ae50bd54165e42b49c4fa107a685a, type: 2}

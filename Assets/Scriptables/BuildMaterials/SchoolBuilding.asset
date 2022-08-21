@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
   m_Name: SchoolBuilding
   m_EditorClassIdentifier: 
-  buildMaterialIndex: 0
-  materialName: 
-  downgradeOptions: []
-  buildRecipe: []
+  buildMaterialIndex: 14
+  materialName: SchoolBuilding
+  downgradeOptions:
+  - {fileID: 11400000, guid: 8728617e07f4eee4989a1e0de2fe5fce, type: 2}
+  - {fileID: 11400000, guid: 686d16104982a1545b1561229943971c, type: 2}
+  buildRecipe:
+  - {fileID: 11400000, guid: 359e7839db5b6b848a323cf170cef5ac, type: 2}
+  - {fileID: 11400000, guid: 17ee5d2a3704bd747921f550dd328cef, type: 2}
+  - {fileID: 11400000, guid: 8728617e07f4eee4989a1e0de2fe5fce, type: 2}
   isBaseMaterial: 0
-  sprite: {fileID: 0}
-  tileBase: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 9be27d5c22ba2b74484be8c78ef481ea, type: 3}
+  tileBase: {fileID: 11400000, guid: b98f10605ccbbe24eb64dc97d5c6c115, type: 2}

@@ -1568,6 +1568,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8728617e07f4eee4989a1e0de2fe5fce, type: 2}
   - {fileID: 11400000, guid: ba0a5e4481130bd4b9d7cd1bca807a1c, type: 2}
   - {fileID: 11400000, guid: 686d16104982a1545b1561229943971c, type: 2}
+  - {fileID: 11400000, guid: aabd971bdee279c45aafb9ae31596e7d, type: 2}
+  - {fileID: 11400000, guid: c657d9fb1e5ee0b45aec39c8a34e3f6e, type: 2}
+  - {fileID: 11400000, guid: a7eb93c2115ed9a4b83304b053e8a608, type: 2}
+  - {fileID: 11400000, guid: 359e7839db5b6b848a323cf170cef5ac, type: 2}
+  - {fileID: 11400000, guid: 17ee5d2a3704bd747921f550dd328cef, type: 2}
+  - {fileID: 11400000, guid: 5144c9ae490eabb4caa945d5f113ce2f, type: 2}
+  - {fileID: 11400000, guid: 6f26755cb6aaaee409eef717a8c74032, type: 2}
+  - {fileID: 11400000, guid: 6adac558c09d9e344bbaa5402ae8db31, type: 2}
   - {fileID: 11400000, guid: 9dab1808c563fe04cb099e8cf3900eb4, type: 2}
   starterBuildMaterials:
   - {fileID: 11400000, guid: af57c102df7312f43865384de9d8f9a2, type: 2}

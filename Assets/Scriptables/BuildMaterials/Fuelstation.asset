@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
   m_Name: Fuelstation
   m_EditorClassIdentifier: 
-  buildMaterialIndex: 0
-  materialName: 
-  downgradeOptions: []
-  buildRecipe: []
+  buildMaterialIndex: 15
+  materialName: Fuelstation
+  downgradeOptions:
+  - {fileID: 11400000, guid: 5144c9ae490eabb4caa945d5f113ce2f, type: 2}
+  - {fileID: 11400000, guid: 17ee5d2a3704bd747921f550dd328cef, type: 2}
+  buildRecipe:
+  - {fileID: 11400000, guid: 17ee5d2a3704bd747921f550dd328cef, type: 2}
+  - {fileID: 11400000, guid: 5144c9ae490eabb4caa945d5f113ce2f, type: 2}
+  - {fileID: 11400000, guid: ba0a5e4481130bd4b9d7cd1bca807a1c, type: 2}
   isBaseMaterial: 0
-  sprite: {fileID: 0}
-  tileBase: {fileID: 0}
+  sprite: {fileID: 21300000, guid: a376c8527b7a7ce428936d9a15be6c9d, type: 3}
+  tileBase: {fileID: 11400000, guid: 94511c0c173300f43bf71854bed9b1cb, type: 2}

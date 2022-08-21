@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
   m_Name: Blacksmith
   m_EditorClassIdentifier: 
-  buildMaterialIndex: 0
-  materialName: 
-  downgradeOptions: []
-  buildRecipe: []
+  buildMaterialIndex: 12
+  materialName: Blacksmtih
+  downgradeOptions:
+  - {fileID: 11400000, guid: 55a2b4a62083cad47918a8f822327a7d, type: 2}
+  - {fileID: 11400000, guid: c6da41d07ff55194c9b9f6c7e098ea07, type: 2}
+  buildRecipe:
+  - {fileID: 11400000, guid: 55a2b4a62083cad47918a8f822327a7d, type: 2}
+  - {fileID: 11400000, guid: c6da41d07ff55194c9b9f6c7e098ea07, type: 2}
+  - {fileID: 11400000, guid: ba0a5e4481130bd4b9d7cd1bca807a1c, type: 2}
   isBaseMaterial: 0
-  sprite: {fileID: 0}
-  tileBase: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 8267337dbd855aa40aba4754757999d6, type: 3}
+  tileBase: {fileID: 11400000, guid: 5bc6c2a2e3fd14740a3eb2b7bffcccac, type: 2}
