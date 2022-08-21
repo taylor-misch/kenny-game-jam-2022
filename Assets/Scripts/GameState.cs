@@ -92,11 +92,12 @@ public class GameState : Singleton<GameState>
 
     public void DowngradeSelectionsExcept(Vector3Int buildLocation)
     {
-        foreach (Vector3Int location in selectableLocations)
+        foreach (Vector3Int location in downgradeLocations)
         {
             if (location != buildLocation)
             {
                 BoardHex boardHexAtLocation = GetBoardHexAtPosition(location);
+                string oldMaterial = boardHexAtLocation.BuildMaterial.MaterialName;
                 int downgradeRange = boardHexAtLocation.BuildMaterial.DowngradeOptions.Count;
                 if (downgradeRange != 0)
                 {
@@ -104,6 +105,8 @@ public class GameState : Singleton<GameState>
                         boardHexAtLocation.BuildMaterial.DowngradeOptions[UnityEngine.Random.Range(0, downgradeRange)];
                     coordinateIndexDictionary[location] = boardHexAtLocation.BuildMaterial.BuildMaterialIndex;
                     defaultMap.SetTile(location, boardHexAtLocation.BuildMaterial.TileBase);
+                    SendMessageToMessageBoard("Downgrade from: " + oldMaterial + " to " + boardHexAtLocation.BuildMaterial.MaterialName);
+                    // Debug.Log("DOWNGRADE at: "+ location + " new material is: " + boardHexAtLocation.BuildMaterial.MaterialName);
                 }
             }
         }

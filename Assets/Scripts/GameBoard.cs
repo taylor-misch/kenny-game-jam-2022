@@ -173,7 +173,6 @@ public class GameBoard : Singleton<GameBoard>
                 gameState.IsBuildLocationSet = true;
                 gameState.DowngradeLocations = new List<Vector3Int>(gameState.SelectableLocations);
                 gameState.SelectableLocations = new List<Vector3Int>();
-
             }
             else
             {
