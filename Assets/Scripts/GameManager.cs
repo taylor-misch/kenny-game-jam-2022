@@ -21,13 +21,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuItemPrefab;
 
     [SerializeField] GameObject selectableBoxPrefab;
- 
+
+    [SerializeField] GameObject turnCounter;
+    
     void Start()
     {
         gameState = GameState.GetInstance();
         gameBoard = GameBoard.GetInstance();
         gameBoard.SetupGame();
-        
+        gameState.Turn = 1;
+        turnCounter.GetComponent<Text>().text = "Turn: " + gameState.Turn;
         
         buildRecipeOverlay.SetActive(false);
         
@@ -52,14 +55,29 @@ public class GameManager : MonoBehaviour
     {
         if (gameState.MaterialsSelected["selectable4"] != null)
         {
-            gameState.DefaultMap.SetTile(gameState.MaterialsSelected["selectable4"], gameState.CurrentRecipe.TileBase);
+            Vector3Int buildPosition = gameState.MaterialsSelected["selectable4"];
+            gameState.DefaultMap.SetTile(buildPosition, gameState.CurrentRecipe.TileBase);
+            gameState.CoordinateIndexDictionary[buildPosition] =
+                gameState.CurrentRecipe.BuildMaterialIndex;
+            
+            // update turn
+            gameState.Turn = gameState.Turn + 1;
+            turnCounter.GetComponent<Text>().text = "Turn: " + gameState.Turn;
+            
+            // refresh board hex list
+            BoardHex boardHex = gameState.GetBoardHexAtPosition(buildPosition);
+            boardHex.BuildMaterial = gameState.CurrentRecipe;
+            
+            // refresh the tile count
+            gameState.UpdateBoardTileCounts();
         }
+        CancelBuild();
         Debug.Log("Build It!");
     }
 
     private void DisplayBuildRecipePanel(int recipeIndex)
     {
-        // gameState.CurrentRecipe = gameState.BuildMaterialList[recipeIndex];
+        gameState.CurrentRecipe = gameState.BuildMaterialList[recipeIndex];
         gameState.MaterialsNeeded = new List<BuildMaterial>(buildSystem.GetRecipe(recipeIndex));
         buildRecipeOverlay.SetActive(true);
         int index = 0;

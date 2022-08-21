@@ -7,16 +7,16 @@ public class BuildingButtonHandler : MonoBehaviour
     BuildingCreator buildingCreator;
     GameBoard gameBoard;
     [SerializeField] BuildMaterial buildMaterial;
-    
-    //Evaluate
     Button button;
-
+    GameState gameState;
+    
     private void Awake()
     {
         button = GetComponent<Button>();
         button.onClick.AddListener(ButtonClicked);
         buildingCreator = BuildingCreator.GetInstance();
         gameBoard = GameBoard.GetInstance();
+        gameState = GameState.GetInstance();
     }
 
 
@@ -24,6 +24,7 @@ public class BuildingButtonHandler : MonoBehaviour
     {
         buildingCreator.MaterialSelected(buildMaterial);
         gameBoard.PrintOptions();
+        gameState.ClearBuildRecipeOverlayData();
         GameEvents.current.RecipeSelected(buildMaterial.BuildMaterialIndex);
     }
 

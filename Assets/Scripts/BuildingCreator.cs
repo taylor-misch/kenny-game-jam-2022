@@ -24,14 +24,14 @@ public class BuildingCreator : Singleton<BuildingCreator>
     void OnEnable()
     {
         playerInput.Enable();
-        playerInput.Gameplay.MouseLeftClick.performed += OnLeftClick;
+        // playerInput.Gameplay.MouseLeftClick.performed += OnLeftClick;
         playerInput.Gameplay.MouseRightClick.performed += OnRightClick;
     }
     
     void OnDisable()
     {
         playerInput.Disable();
-        playerInput.Gameplay.MouseLeftClick.performed -= OnLeftClick;
+        // playerInput.Gameplay.MouseLeftClick.performed -= OnLeftClick;
         playerInput.Gameplay.MouseRightClick.performed -= OnRightClick;
     }
 
@@ -41,12 +41,12 @@ public class BuildingCreator : Singleton<BuildingCreator>
         {
             selectedMaterial = value;
             tileBase = selectedMaterial != null ? selectedMaterial.TileBase : null;
-            UpdatePreview();
+            // UpdatePreview();
         }
     }
 
-    private void Update()
-    {
+    // private void Update()
+    // {
         // if (selectedMaterial != null)
         // {
             // Vector3 pos = _camera.ScreenToWorldPoint(mousePos);
@@ -61,24 +61,26 @@ public class BuildingCreator : Singleton<BuildingCreator>
                 // UpdatePreview();
             // }
         // }
-    }
+    // }
     
-    void OnLeftClick(InputAction.CallbackContext ctx)
-    {
+    // void OnLeftClick(InputAction.CallbackContext ctx)
+    // {
         // if (selectedMaterial != null && !EventSystem.current.IsPointerOverGameObject())
         // if (selectedMaterial != null)
         // {
-        //     // Debug.Log("Current Grid Position: " + currentGridPosition);
-        //     if (gameBoard.CanDrawHex(gameState.CurrentGridPosition))
-        //     {
-        //         HandleDrawing();
-        //     }
-        //     else
-        //     {
-        //         Debug.Log("You can't draw here");
-        //     }
+            // gameState.ClearBuildRecipeOverlayData();
+            
+            // Debug.Log("Current Grid Position: " + currentGridPosition);
+            // if (gameBoard.CanDrawHex(gameState.CurrentGridPosition))
+            // {
+                // HandleDrawing();
+            // }
+            // else
+            // {
+                // Debug.Log("You can't draw here");
+            // }
         // }
-    }
+    // }
 
     void OnRightClick(InputAction.CallbackContext ctx)
     {

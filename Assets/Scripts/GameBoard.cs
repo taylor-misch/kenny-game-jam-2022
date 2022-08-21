@@ -25,22 +25,21 @@ public class GameBoard : Singleton<GameBoard>
     public void SetupGame()
     {
         RenderGameBoard(gameState.GetStartingBoardPositions());
-        gameState.Turn = 0;
     }
 
 
     void RenderGameBoard(List<Vector3Int> tilePositions)
     {
-        // int index = 0;
+        int index = 0;
 
         foreach (Vector3Int position in tilePositions)
         {
             BuildMaterial buildMaterial = gameState.StarterBuildMaterials[Random.Range(0, 3)];
-            BoardHex boardHex = new BoardHex(position, buildMaterial);
+            BoardHex boardHex = new BoardHex(index, position, buildMaterial);
             gameState.BoardHexList.Add(boardHex);
             gameState.DefaultMap.SetTile(position, buildMaterial.TileBase);
             gameState.CoordinateIndexDictionary.Add(position, buildMaterial.BuildMaterialIndex);
-            // index++;
+            index++;
         }
     }
 
@@ -65,26 +64,26 @@ public class GameBoard : Singleton<GameBoard>
         }
     }
 
-    public void UpdateBoardTileCounts()
-    {
-        gameState.TileCountDictionary.Clear();
-        foreach (BoardHex boardHex in gameState.BoardHexList)
-        {
-            if (gameState.TileCountDictionary.ContainsKey(boardHex.BuildMaterial.MaterialName))
-            {
-                int count = gameState.TileCountDictionary[boardHex.BuildMaterial.MaterialName];
-                count++;
-                gameState.TileCountDictionary[boardHex.BuildMaterial.MaterialName] = count;
-            }
-            else
-            {
-                gameState.TileCountDictionary.Add(boardHex.BuildMaterial.MaterialName, 1);
-            }
-        }
-
-        foreach (KeyValuePair<string, int> kvp in gameState.TileCountDictionary)
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
-    }
+    // public void UpdateBoardTileCounts()
+    // {
+    //     gameState.TileCountDictionary.Clear();
+    //     foreach (BoardHex boardHex in gameState.BoardHexList)
+    //     {
+    //         if (gameState.TileCountDictionary.ContainsKey(boardHex.BuildMaterial.MaterialName))
+    //         {
+    //             int count = gameState.TileCountDictionary[boardHex.BuildMaterial.MaterialName];
+    //             count++;
+    //             gameState.TileCountDictionary[boardHex.BuildMaterial.MaterialName] = count;
+    //         }
+    //         else
+    //         {
+    //             gameState.TileCountDictionary.Add(boardHex.BuildMaterial.MaterialName, 1);
+    //         }
+    //     }
+    //
+    //     foreach (KeyValuePair<string, int> kvp in gameState.TileCountDictionary)
+    //         Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+    // }
 
     public void DisplayTargets()
     {
@@ -96,6 +95,7 @@ public class GameBoard : Singleton<GameBoard>
 
     public void HideTargets()
     {
+        gameState.IsSelectableEngaged = false;
         foreach (BoardHex boardHex in gameState.BoardHexList)
         {
             gameState.SelectMap.SetTile(boardHex.Position, null);

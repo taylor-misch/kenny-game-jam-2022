@@ -44,6 +44,27 @@ public class GameState : Singleton<GameState>
         base.Awake();
     }
 
+    public void UpdateBoardTileCounts()
+    {
+        tileCountDictionary.Clear();
+        foreach (BoardHex boardHex in boardHexList)
+        {
+            if (tileCountDictionary.ContainsKey(boardHex.BuildMaterial.MaterialName))
+            {
+                int count = tileCountDictionary[boardHex.BuildMaterial.MaterialName];
+                count++;
+                tileCountDictionary[boardHex.BuildMaterial.MaterialName] = count;
+            }
+            else
+            {
+                tileCountDictionary.Add(boardHex.BuildMaterial.MaterialName, 1);
+            }
+        }
+
+        foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
+            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+    }
+    
     public void ClearBuildRecipeOverlayData()
     {
         materialsNeeded.Clear();
