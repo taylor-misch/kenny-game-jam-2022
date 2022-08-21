@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -57,11 +58,14 @@ public class GameState : Singleton<GameState>
     
     // Selectable locations
     List<Vector3Int> selectableLocations;
+
+    List<Vector3Int> selectedLocations;
     
     //Messages
     [SerializeField] GameObject messageBoard;
     private float timeToAppear = 2f;
     private float timeWhenDisappear;
+    bool isFirstTime;
     
     
     //Win Screen
@@ -69,6 +73,9 @@ public class GameState : Singleton<GameState>
     
     // Downgrading
     List<Vector3Int> downgradeLocations = new List<Vector3Int>();
+
+    [SerializeField] AudioSource errorSound;
+    [SerializeField] AudioSource winSound;
     
     protected override void Awake()
     {
@@ -85,6 +92,14 @@ public class GameState : Singleton<GameState>
     }
     public void SendMessageToMessageBoard(string message)
     {
+        if (isFirstTime)
+        {
+            isFirstTime = false;
+        }
+        else
+        {
+            errorSound.Play();
+        }
         messageBoard.GetComponent<Text>().text = message;
         messageBoard.gameObject.GetComponent<Text>().enabled = true;
         timeWhenDisappear = Time.time + timeToAppear;
@@ -166,6 +181,19 @@ public class GameState : Singleton<GameState>
         return true;
     }
 
+
+    public bool DoesSelectionsAlreadyContainTarget(Vector3Int position)
+    {
+        foreach (KeyValuePair<string, Vector3Int> kvp in materialsSelected )
+        {
+            if (kvp.Value == position)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public List<string> GetCurrentMaterialRecipeItemNames()
     {
         List<string> validTiles = new List<string>();
@@ -197,6 +225,7 @@ public class GameState : Singleton<GameState>
         if (tileCountDictionary.ContainsKey("RocketShip"))
         {
             Debug.Log("You Win!");
+            winSound.Play();
             winScreen.transform.GetChild(1).GetComponent<Text>().text = "Turns Taken: " + turn;
             winScreen.SetActive(true);
         }
@@ -423,5 +452,17 @@ public class GameState : Singleton<GameState>
     {
         get => downgradeLocations;
         set => downgradeLocations = value;
+    }
+
+    public bool IsFirstTime
+    {
+        get => isFirstTime;
+        set => isFirstTime = value;
+    }
+
+    public List<Vector3Int> SelectedLocations
+    {
+        get => selectedLocations;
+        set => selectedLocations = value;
     }
 }

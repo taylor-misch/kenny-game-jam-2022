@@ -22,11 +22,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject selectableBoxPrefab;
 
     [SerializeField] GameObject turnCounter;
-    
+
+    [SerializeField] AudioSource buttonPress;
+    [SerializeField] AudioSource buildSound;
+    [SerializeField] AudioSource cancelSound;
+    [SerializeField] AudioSource selectionSound;
     void Start()
     {
         gameState = GameState.GetInstance();
         gameBoard = GameBoard.GetInstance();
+        gameState.IsFirstTime = true;
         gameBoard.SetupGame();
         gameState.Turn = 1;
         turnCounter.GetComponent<Text>().text = "Turn: " + gameState.Turn;
@@ -40,16 +45,26 @@ public class GameManager : MonoBehaviour
         GameEvents.current.onRecipeSelected += DisplayBuildRecipePanel;
         GameEvents.current.onRecipeUnselected += HideBuildRecipePanel;
         GameEvents.current.onRecipeUnselected += DestroyChildren;
+        GameEvents.current.onRecipeSelected += PlayButtonPress;
+        
         PopulateBuildMenu();
         gameState.UpdateBoardTileCounts();
         gameState.EvaluateIfRecipeCanBeBuild();
         GameEvents.current.onSelectableEnaged += PrepareForSelection;
+        GameEvents.current.onSelectableEnaged += PlayButtonPress2;
         GameEvents.current.onBuildSelectableEngaged += PrepareForBuildLocationSelection;
+        GameEvents.current.onBuildSelectableEngaged += PlayButtonPress2;
+
+        GameEvents.current.onSelectableSelection += PlaySelectionSound;
+        GameEvents.current.onBuildSelectableSelection += PlaySelectionSound;
+
+
     }
 
 
     public void CancelBuild()
     {
+        cancelSound.Play();
         gameState.ClearBuildRecipeOverlayData();
     }
 
@@ -58,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameState.IsBuildLocationSet)
         {
+            buildSound.Play();
             Vector3Int buildPosition = gameState.BuildLocation;
             gameState.DefaultMap.SetTile(buildPosition, gameState.CurrentRecipe.TileBase);
             gameState.CoordinateIndexDictionary[buildPosition] =
@@ -70,7 +86,7 @@ public class GameManager : MonoBehaviour
             // refresh board hex list
             BoardHex boardHex = gameState.GetBoardHexAtPosition(buildPosition);
             boardHex.BuildMaterial = gameState.CurrentRecipe;
-            gameState.DowngradeSelectionsExcept(buildPosition);
+            // gameState.DowngradeSelectionsExcept(buildPosition);
             // refresh the tile count
             gameState.UpdateBoardTileCounts();
         }
@@ -80,6 +96,7 @@ public class GameManager : MonoBehaviour
 
     private void DisplayBuildRecipePanel(int recipeIndex)
     {
+        gameState.MaterialsSelected.Clear();
         gameState.CurrentRecipe = gameState.BuildMaterialList[recipeIndex];
         gameState.MaterialsNeeded = new List<BuildMaterial>(buildSystem.GetRecipe(recipeIndex));
         buildRecipeOverlay.SetActive(true);
@@ -153,5 +170,20 @@ public class GameManager : MonoBehaviour
     private void PrepareForBuildLocationSelection()
     {
         gameState.IsBuildSelectableEngaged = true;
+    }
+
+    private void PlayButtonPress(int num)
+    {
+        buttonPress.Play();
+    }
+    
+    private void PlayButtonPress2()
+    {
+        buttonPress.Play();
+    }
+
+    private void PlaySelectionSound()
+    {
+        selectionSound.Play();
     }
 }

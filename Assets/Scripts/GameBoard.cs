@@ -100,8 +100,15 @@ public class GameBoard : Singleton<GameBoard>
         {
             if (gameState.GetCurrentMaterialRecipeItemNames().Contains(boardHex.BuildMaterial.MaterialName))
             {
-                gameState.SelectableLocations.Add(boardHex.Position);
-                gameState.SelectMap.SetTile(boardHex.Position, blueTarget.TileBase);
+                if (gameState.DoesSelectionsAlreadyContainTarget(boardHex.Position))
+                {
+                    gameState.SelectMap.SetTile(boardHex.Position, greenCheck.TileBase);
+                }
+                else
+                {
+                    gameState.SelectableLocations.Add(boardHex.Position);
+                    gameState.SelectMap.SetTile(boardHex.Position, blueTarget.TileBase);
+                }
             }
         }
     }
@@ -149,7 +156,6 @@ public class GameBoard : Singleton<GameBoard>
                 gameState.SelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
                 gameState.MaterialsSelected[gameState.SelectionBox.name] = currentPosition;
                 gameState.SelectableLocations = new List<Vector3Int>();
-
             }
             else
             {
