@@ -95,9 +95,14 @@ public class GameBoard : Singleton<GameBoard>
 
     public void DisplayTargets()
     {
+       
         foreach (BoardHex boardHex in gameState.BoardHexList)
         {
-            gameState.SelectMap.SetTile(boardHex.Position, blueTarget.TileBase);
+            if (gameState.GetCurrentMaterialRecipeItemNames().Contains(boardHex.BuildMaterial.MaterialName))
+            {
+                gameState.SelectableLocations.Add(boardHex.Position);
+                gameState.SelectMap.SetTile(boardHex.Position, blueTarget.TileBase);
+            }
         }
     }
 
@@ -108,12 +113,15 @@ public class GameBoard : Singleton<GameBoard>
         {
             gameState.SelectMap.SetTile(boardHex.Position, null);
         }
+
+        gameState.SelectableLocations = new List<Vector3Int>();
     }
 
     public void DisplayBuildTargets()
     {
         foreach (KeyValuePair<string, Vector3Int> kvp in gameState.MaterialsSelected)
         {
+            gameState.SelectableLocations.Add(kvp.Value);
             gameState.SelectMap.SetTile(kvp.Value, blueTarget.TileBase);
         }
     }
@@ -125,6 +133,7 @@ public class GameBoard : Singleton<GameBoard>
         {
             gameState.SelectMap.SetTile(boardHex.Position, null);
         }
+        gameState.SelectableLocations = new List<Vector3Int>();
     }
 
     void OnLeftClick(InputAction.CallbackContext ctx)
@@ -133,12 +142,18 @@ public class GameBoard : Singleton<GameBoard>
         {
             // assign selected material
             Vector3Int currentPosition = gameState.CurrentGridPosition;
-            if (gameState.GetStartingBoardPositions().Contains(currentPosition))
+            if (gameState.SelectableLocations.Contains(currentPosition))
             {
                 int itemIndex = gameState.CoordinateIndexDictionary[currentPosition];
                 gameState.SelectedBuildMaterial = gameState.BuildMaterialList[itemIndex];
                 gameState.SelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
                 gameState.MaterialsSelected[gameState.SelectionBox.name] = currentPosition;
+                gameState.SelectableLocations = new List<Vector3Int>();
+
+            }
+            else
+            {
+                gameState.SendMessageToMessageBoard("Not A Valid Material");
             }
 
             GameEvents.current.SelectableSelection();
@@ -149,13 +164,19 @@ public class GameBoard : Singleton<GameBoard>
         {
             // assign selected material
             Vector3Int currentPosition = gameState.CurrentGridPosition;
-            if (gameState.GetStartingBoardPositions().Contains(currentPosition))
+            if (gameState.SelectableLocations.Contains(currentPosition))
             {
                 int itemIndex = gameState.CoordinateIndexDictionary[currentPosition];
                 gameState.SelectedBuildMaterial = gameState.BuildMaterialList[itemIndex];
                 gameState.BuildSelectionBox.GetComponent<Image>().sprite = gameState.SelectedBuildMaterial.Sprite;
                 gameState.BuildLocation = currentPosition;
                 gameState.IsBuildLocationSet = true;
+                gameState.SelectableLocations = new List<Vector3Int>();
+
+            }
+            else
+            {
+                gameState.SendMessageToMessageBoard("You Can't Build There");
             }
 
             GameEvents.current.BuildSelectableSelection();

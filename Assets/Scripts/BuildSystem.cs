@@ -40,7 +40,7 @@ public class BuildSystem : Singleton<BuildSystem>
         // remove one for each common element (if an element reaches 0, take it out of dictionary)
         foreach (KeyValuePair<string, Vector3Int> kvp in gameState.MaterialsSelected)
         {
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+            // Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
             BoardHex boardHex = gameState.GetBoardHexAtPosition(kvp.Value);
             if (buildingMaterialCountDictionary.ContainsKey(boardHex.BuildMaterial.MaterialName))
             {
@@ -56,8 +56,8 @@ public class BuildSystem : Singleton<BuildSystem>
             }
         }
 
-        foreach (KeyValuePair<string, int> kvp in buildingMaterialCountDictionary)
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        // foreach (KeyValuePair<string, int> kvp in buildingMaterialCountDictionary)
+            // Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
         
         // if the dictionary is empty and the materials list had no extras you can build
         return buildingMaterialCountDictionary.Count == 0;

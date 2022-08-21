@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe2084b016dade4a8a10a3a9e1d58cc, type: 3}
+  m_Name: RocketShip
+  m_EditorClassIdentifier: 
+  buildMaterialIndex: 9
+  materialName: RocketShip
+  downgradeOptions: []
+  buildRecipe:
+  - {fileID: 11400000, guid: af57c102df7312f43865384de9d8f9a2, type: 2}
+  - {fileID: 11400000, guid: 55a2b4a62083cad47918a8f822327a7d, type: 2}
+  isBaseMaterial: 0
+  sprite: {fileID: 21300000, guid: 607afbd53aeb4e54abe839fa292b8a7b, type: 3}
+  tileBase: {fileID: 11400000, guid: c08a77db103075448a1a2d2c7e1acf5a, type: 2}

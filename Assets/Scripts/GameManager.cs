@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
         
         buildRecipeOverlay.SetActive(false);
         
+        gameState.SendMessageToMessageBoard("Let's Get Building!");
+        
         buildSystem = BuildSystem.GetInstance();
         GameEvents.current.onRecipeSelected += DisplayBuildRecipePanel;
         GameEvents.current.onRecipeUnselected += HideBuildRecipePanel;
@@ -49,7 +51,6 @@ public class GameManager : MonoBehaviour
     public void CancelBuild()
     {
         gameState.ClearBuildRecipeOverlayData();
-        Debug.Log("Cancel Build");
     }
 
 
@@ -75,7 +76,6 @@ public class GameManager : MonoBehaviour
         }
         CancelBuild();
         gameState.EvaluateIfRecipeCanBeBuild();
-        Debug.Log("Build It!");
     }
 
     private void DisplayBuildRecipePanel(int recipeIndex)

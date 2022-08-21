@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -53,20 +54,45 @@ public class GameState : Singleton<GameState>
     // Menu items
     List<GameObject> menuItems = new List<GameObject>();
     
+    // Selectable locations
+    List<Vector3Int> selectableLocations;
+    
+    //Messages
+    [SerializeField] GameObject messageBoard;
+    private float timeToAppear = 2f;
+    private float timeWhenDisappear;
+    
+    
+    //Win Screen
+    [SerializeField] GameObject winScreen;
+    
     protected override void Awake()
     {
         base.Awake();
     }
 
+    void Update()
+    {
+        if (messageBoard.GetComponent<Text>().enabled && (Time.time >= timeWhenDisappear) )
+        {
+            messageBoard.GetComponent<Text>().text = "";
+            messageBoard.GetComponent<Text>().enabled = false;
+        }
+    }
+    public void SendMessageToMessageBoard(string message)
+    {
+        messageBoard.GetComponent<Text>().text = message;
+        messageBoard.gameObject.GetComponent<Text>().enabled = true;
+        timeWhenDisappear = Time.time + timeToAppear;
+    }
+    
     public void EvaluateIfRecipeCanBeBuild()
     {
         foreach (GameObject menuItem in menuItems)
         {
             BuildMaterial material = menuItem.GetComponent<BuildingButtonHandler>().BuildMaterial;
-            Debug.Log("\n material: " + material.MaterialName);
             bool result = CheckIfRecipeIsPossible(material.BuildRecipe);
             menuItem.GetComponent<Button>().interactable = result;
-            // Debug.Log("Material: " + material.MaterialName + " is " + result);
         }
     }
 
@@ -86,9 +112,9 @@ public class GameState : Singleton<GameState>
             }
         }
         
-        foreach (KeyValuePair<string, int> kvp in materialDictionary)
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
-        
+        // foreach (KeyValuePair<string, int> kvp in materialDictionary)
+        //     Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        //
 
         foreach (KeyValuePair<string, int> kvp in materialDictionary)
         {
@@ -105,12 +131,23 @@ public class GameState : Singleton<GameState>
             }
         }
 
-        foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        // foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
+        //     Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
         
         return true;
     }
 
+    public List<string> GetCurrentMaterialRecipeItemNames()
+    {
+        List<string> validTiles = new List<string>();
+        foreach (BuildMaterial material in currentRecipe.BuildRecipe)
+        {
+            validTiles.Add(material.MaterialName);
+        }
+
+        return validTiles;
+    }
+    
     public void UpdateBoardTileCounts()
     {
         tileCountDictionary.Clear();
@@ -128,8 +165,15 @@ public class GameState : Singleton<GameState>
             }
         }
 
-        foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
-            Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
+        if (tileCountDictionary.ContainsKey("RocketShip"))
+        {
+            Debug.Log("You Win!");
+            winScreen.transform.GetChild(1).GetComponent<Text>().text = "Turns Taken: " + turn;
+            winScreen.SetActive(true);
+        }
+        
+        // foreach (KeyValuePair<string, int> kvp in tileCountDictionary)
+            // Debug.Log("Key = " + kvp.Key + " Value = " + kvp.Value);
     }
     
     public void ClearBuildRecipeOverlayData()
@@ -332,5 +376,17 @@ public class GameState : Singleton<GameState>
     {
         get => menuItems;
         set => menuItems = value;
+    }
+
+    public List<Vector3Int> SelectableLocations
+    {
+        get => selectableLocations;
+        set => selectableLocations = value;
+    }
+
+    public GameObject MessageBoard
+    {
+        get => messageBoard;
+        set => messageBoard = value;
     }
 }
